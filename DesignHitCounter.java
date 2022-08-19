@@ -1,22 +1,24 @@
 class HitCounter {
-    public Queue<Integer> hits; //Actually stores timeStamps when a hit comes-in
+    public Queue<Integer> timed;
 
     public HitCounter() {
-        hits = new LinkedList<>();
+        timed = new LinkedList<>();
     }
     
     public void hit(int timestamp) {
-        hits.add(timestamp);
+        timed.add(timestamp);
     }
     
     public int getHits(int timestamp) {
-        while(!hits.isEmpty()){
-            int diff = timestamp - hits.peek();
-            if(diff >= 300) hits.remove();
-            else break; //out of loop->
+        while(!timed.isEmpty()){
+            int diff = timestamp - timed.peek();
+            if(diff >= 300)
+                timed.remove();     //Since timestamp is always input in chronological ; previously added elements to queue can be simply removed and since each timestamp can only have one hit per second, queue.size() denotes all number of hits made in the previous 300 seconds
+            else
+                break;                
         }
-
-        return hits.size();
+        
+        return timed.size();
     }
 }
 
